@@ -158,6 +158,15 @@ fun RecipeScreen(
         getRecipes()
     }
 
+    if (recipeList.isEmpty()) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("No content!")
+        }
+    }
+
     LazyColumn(
         modifier = modifier,
     ) {
