@@ -10,6 +10,8 @@ Provides all basic nuts and bolts to get going as fast as possible. Includes:
 
 # How to start
 
+Note: Sample built using these steps is at https://github.com/saravr/recipe-list-android.
+
 ## Setup
 1. Follow "Quick Adds" section below and complete the setup, do Gradle sync!
 2. Create the following directories under the app source root: api/service, di, model, repository, ui/viewmodel
