@@ -91,20 +91,27 @@ interface RecipeRepository {
 @Singleton
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeService: RecipeService,
+    @ApplicationScope private val scope: CoroutineScope,
 ): RecipeRepository {
-    private val _recipeList = MutableStateFlow<List<RecipeItem>>(
-        emptyList()
-    )
+    private val _recipeList = MutableStateFlow<List<RecipeItem>>(emptyList())
     override val recipeList = _recipeList.asStateFlow()
 
-    override suspend fun getRecipes() {
-        val recipeList = try {
-            recipeService.getRecipes()
-        } catch (exception: Exception) {
-            Timber.e("Error fetching recipes: ${exception.message}")
-            emptyList()
+    init {
+        refreshRecipes()
+    }
+
+    override fun refreshRecipes() {
+        scope.launch {
+            val recipeList = try {
+                recipeService.getRecipes()
+            } catch (exception: Exception) {
+                Timber.e("Error fetching recipes: ${exception.message}")
+                emptyList()
+            }
+            _recipeList.update {
+                recipeList
+            }
         }
-        _recipeList.emit(recipeList)
     }
 }
 ```
@@ -121,26 +128,30 @@ abstract class RepositoryModule {
 }
 ```
 
+Define ApplicationScope
+```
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ApplicationScope
+```
 ## Add ViewModel
 ```
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
 ): ViewModel() {
-    private val _recipeList = MutableStateFlow<List<RecipeItem>>(emptyList())
-    val recipeList = _recipeList.asStateFlow()
+    val recipeList = recipeRepository.recipeList
 
     init {
-         viewModelScope.launch {
-            recipeRepository.recipeList.collectLatest {
-                _recipeList.emit(it)
-            }
+        viewModelScope.launch {
+            recipeRepository.refreshRecipes()
         }
     }
 
-    fun getRecipeList() {
+    // TODO: avoid multiple simultaneous invocations
+    fun refreshRecipes() {
         viewModelScope.launch {
-            recipeRepository.getRecipes()
+            recipeRepository.refreshRecipes()
         }
     }
 }
