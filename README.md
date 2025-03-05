@@ -267,6 +267,8 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 ```
 
 ## (project-level) build.gradle.kts
+
+Note: ensure kotlin versions mentioned in gradle files should match the one listed in libs.versions.toml.
 ```
 plugins {
     id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
