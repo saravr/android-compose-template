@@ -37,7 +37,7 @@ Add the module class to provide network layer dependencies (using Dagger/Hilt).
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://hf-android-app.s3-eu-west-1.amazonaws.com"
+    private const val BASE_URL = "https://hf-android-app.s3-eu-west-1.amazonaws.com" // TODO: <-- update!
     private val json = Json {
         prettyPrint = true
         ignoreUnknownKeys = true
@@ -233,6 +233,7 @@ The following can be added *on top of* the template created by Android Studio (f
 ```
 [versions]
 androidUtilities = "0.0.9"
+coilComposeVersion = "2.6.0"
 constraintLayoutVersion = "1.1.0"
 datastoreVersion = "1.1.2"
 hiltNavigationCompose = "1.2.0"
@@ -253,6 +254,7 @@ androidx-constraint-layout = { module = "androidx.constraintlayout:constraintlay
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreVersion" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 androidx-compose-material3-windowsizeclass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3Version" }
@@ -317,6 +319,9 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
+
+    // coil
+    implementation(libs.coil.compose)
 
     // timber
     implementation(libs.timber)
