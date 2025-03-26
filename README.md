@@ -10,12 +10,13 @@ Provides all basic nuts and bolts to get going as fast as possible. Includes:
 
 # How to start
 
-Note: Sample built using these steps is at https://github.com/saravr/recipe-list-android.
+Note: A sample built using these steps is at https://github.com/saravr/recipe-list-android.
 
 ## Setup
-1. Follow "Quick Adds" section below and complete the setup, do Gradle sync!
-2. Create the following directories under the app source root: api/service, di, model, repository, ui/viewmodel
-3. Add Application class with hilt annotation
+1. Follow the "Quick Adds" section below and complete the setup, do Gradle sync!
+2. Create the following directories under the app source root:
+   api/service api/response di ui/viewmodels domain/usecases domain/model repository
+4. Add Application class with hilt annotation
 ```
 @HiltAndroidApp
 class RecipeApplication: Application() {
