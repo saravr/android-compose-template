@@ -14,16 +14,33 @@ Note: Sample built using these steps is at https://github.com/saravr/recipe-list
 
 ## Setup
 1. Follow "Quick Adds" section below and complete the setup, do Gradle sync!
-2. Create the following directories under the app source root: api/service, di, model, repository, ui/viewmodel
-3. Add Application class with hilt annotation
+2. Add Application class with hilt annotation
 ```
 @HiltAndroidApp
 class RecipeApplication: Application() {
 }
 ```
-4. Update manifest
+3. Update manifest
 - Add permissions needed, e.g., `<uses-permission android:name="android.permission.INTERNET" />`
 - Specify application class name under <application> tag, e.g., `android:name=".RecipeApplication"` 
+
+## Directory structure
+
+app/presentation/features/user
+app/presentation/services/background/
+app/presentation/services/workers/
+app/presentation/common/
+app/domain/usecases/
+app/domain/repositories/
+app/domain/models/
+app/data/repositories/
+app/data/local/database/
+app/data/local/entities/
+app/data/remote/api
+app/data/remote/dto
+app/data/mappers/
+app/di/modules
+app/di/components/
 
 ## Create model classes
 Use the JSON response payloads from the API to create data classes under the model package. Ideally, these data classes should be separate from domain model classes. For simplicity, the model classes are reused between domain and repository (API) layers.
